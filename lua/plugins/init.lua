@@ -11,6 +11,7 @@ return require'packer'.startup(function()
     use 'romgrk/barbar.nvim'
     use 'mg979/vim-visual-multi'
     use 'norcalli/nvim-colorizer.lua'
+    use 'lukas-reineke/indent-blankline.nvim'
     use {
       'nvim-treesitter/nvim-treesitter',
       run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
