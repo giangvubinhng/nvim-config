@@ -18,7 +18,12 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 ]])
 -- tree -- 
 
-map('n', '<F5>', ':NvimTreeToggle<CR>')
+map('n', '<F5>', ':NvimTreeToggle .<CR>') -- toggle tree at current directory
+
+-- navigate --
+
+map('n', '<leader>fc', ':cd ~/.config/nvim/ <CR>') -- go to nvim config
+map('n', '<leader>fd', ':cd ') -- prompt for a directory navigation
 
 -- telescope --
 
