@@ -22,8 +22,8 @@ map('n', '<F5>', ':NvimTreeToggle .<CR>') -- toggle tree at current directory
 
 -- navigate --
 
-map('n', '<leader>fc', ':cd ~/.config/nvim/ <CR>') -- go to nvim config
-map('n', '<leader>fd', ':cd ') -- prompt for a directory navigation
+map('n', '<leader>fc', ':cd ~/.config/nvim/<CR>') -- go to nvim config
+map('n', '<leader>fd', ':cd ~/dev/<CR>') -- navigate to dev directory
 
 -- telescope --
 
