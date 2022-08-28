@@ -1,3 +1,11 @@
+-- Mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -19,74 +27,62 @@ local on_attach = function(client, bufnr)
   end, bufopts)
   vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', '<C-a>', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
 end
-
+--
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local lspconfig = require('lspconfig')
-
--- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'pyright', 'tsserver', 'clangd', 'csharp_ls', 'eslint', 'graphql', 'java_language_server', 'jsonls', 'eslint' }
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+require('lspconfig')['pyright'].setup{
     on_attach = on_attach,
     capabilities = capabilities,
-  }
-
--- rust lsp
-local rust_opts = {
-  -- rust-tools options
-  tools = {
-    autoSetHints = true,
-    inlay_hints = {
-      show_parameter_hints = true,
-      parameter_hints_prefix = "",
-      other_hints_prefix = "",
-      },
-    },
-
-  -- all the opts to send to nvim-lspconfig
-  -- these override the defaults set by rust-tools.nvim
-  -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-  -- https://rust-analyzer.github.io/manual.html#features
-  server = {
-    settings = {
-      on_attach = function(_, bufnr)
-        -- Hover actions
-        vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-        -- Code action groups
-        vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-      end,
-      ["rust-analyzer"] = {
-        assist = {
-          importEnforceGranularity = true,
-          importPrefix = "crate"
-          },
-        cargo = {
-          allFeatures = true
-          },
-        checkOnSave = {
-          -- default: `cargo check`
-          command = "clippy"
-          },
-        },
-        inlayHints = {
-          lifetimeElisionHints = {
-            enable = true,
-            useParameterNames = true
-          },
-        },
-      }
-    },
 }
-require('rust-tools').setup(rust_opts)
-
-
-end
-
-
+require('lspconfig')['tsserver'].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+require('lspconfig')['rust_analyzer'].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+    -- Server-specific settings...
+    settings = {
+      ["rust-analyzer"] = {}
+    }
+}
+-- require('lspconfig')['csharp_ls'].setup{
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+-- }
+require('lspconfig').omnisharp.setup{
+  cmd= {"omnisharp"},
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+require('lspconfig')['clangd'].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+require('lspconfig')['cmake'].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+require('lspconfig')['eslint'].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+require('lspconfig')['html'].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+require('lspconfig')['java_language_server'].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+require('lspconfig')['jsonls'].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
