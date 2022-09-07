@@ -91,6 +91,29 @@ require('lspconfig')['jdtls'].setup{
     capabilities = capabilities,
 }
 require('lspconfig').tailwindcss.setup{
-    on_attach = on_attach,
-    capabilities = capabilities,
+  cmd = { "tailwindcss-language-server", "--stdio" },
+  filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "django-html", "htmldjango", "edge", "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "haml", "handlebars", "hbs", "html", "html-eex", "heex", "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css", "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript", "typescript", "typescriptreact", "vue", "svelte" },
+  init_options = {
+    userLanguages = {
+      eelixir = "html-eex",
+      eruby = "erb"
+    }
+  },
+  settings = {
+    tailwindCSS = {
+      classAttributes = { "class", "className", "classList", "ngClass" },
+      lint = {
+        cssConflict = "warning",
+        invalidApply = "error",
+        invalidConfigPath = "error",
+        invalidScreen = "error",
+        invalidTailwindDirective = "error",
+        invalidVariant = "error",
+        recommendedVariantOrder = "warning"
+      },
+      validate = true
+    }
+  },
+  on_attach = on_attach,
+  capabilities = capabilities,
 }
