@@ -1,12 +1,6 @@
 return {
   {
     "mason-org/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end
-  },
-  {
-    "mason-org/mason-lspconfig.nvim",
     opts = {}
   },
   {
@@ -15,7 +9,7 @@ return {
       local lsp = vim.lsp
 
       local on_attach = function(_, bufrn)
-        local bufopts = { noremap = true, silent = true, buffer = bufnr }
+        local bufopts = { noremap = true, buffer = bufrn }
         vim.keymap.set('n', 'gD', lsp.buf.declaration, bufopts)
         vim.keymap.set('n', 'gd', lsp.buf.definition, bufopts)
         vim.keymap.set('n', 'K', function()
@@ -41,10 +35,21 @@ return {
         on_attach = on_attach,
         capabilities = capabilities
       })
-      lsp.config('lua-ls', {
+      lsp.enable('pyright')
+
+      lsp.config('lua_ls', {
         on_attach = on_attach,
         capabilities = capabilities
       })
+      lsp.enable('lua_ls')
+
+      lsp.enable('ts_ls')
+
+      lsp.config('csharp_ls', {
+        on_attach = on_attach,
+        capabilities = capabilities
+      })
+      lsp.enable('csharp_ls')
     end
   }
 }
