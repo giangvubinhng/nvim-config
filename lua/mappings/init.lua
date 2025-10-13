@@ -7,6 +7,8 @@ function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
+-- run a shell command on the current file using absolute path
+map('n', '<C-p>', ':!%:p<CR>')
 -- Mapleader
 -- vim.g.mapleader = "\\"
 -- vim.g.maplocalleader = "\\"
