@@ -1,14 +1,27 @@
 return {
   {
     "mason-org/mason.nvim",
-    opts = {}
+    config = function()
+      require("mason").setup({
+        registries = {
+          "github:mason-org/mason-registry",
+          "github:Crashdummyy/mason-registry",
+        },
+      })
+    end
+  },
+  {
+    "seblyng/roslyn.nvim",
+    ---@module 'roslyn.config'
+    ---@type RoslynNvimConfig
+    opts = {},
   },
   {
     "neovim/nvim-lspconfig",
     config = function()
       local lsp = vim.lsp
 
-      local on_attach = function(_, bufrn)
+      local on_attach = function(client, bufrn)
         local bufopts = { noremap = true, buffer = bufrn }
         vim.keymap.set('n', 'gD', lsp.buf.declaration, bufopts)
         vim.keymap.set('n', 'gd', lsp.buf.definition, bufopts)
@@ -26,6 +39,11 @@ return {
         vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, bufopts)
         vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
         vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
+
+        if client.server_capabilities.inlayHintProvider then
+          lsp.inlay_hint.enable(true, { bufnr = bufnr })
+        end
+
       end
 
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -43,13 +61,23 @@ return {
       })
       lsp.enable('lua_ls')
 
-      lsp.enable('ts_ls')
-
-      lsp.config('csharp_ls', {
+      lsp.config('ts_ls', {
         on_attach = on_attach,
         capabilities = capabilities
       })
-      lsp.enable('csharp_ls')
+      lsp.enable('ts_ls')
+
+      lsp.config('roslyn', {
+        on_attach = on_attach,
+        capabilities = capabilities
+      })
+      lsp.enable('roslyn')
+
+      -- lsp.config('csharp_ls', {
+      --   on_attach = on_attach,
+      --   capabilities = capabilities
+      -- })
+      -- lsp.enable('csharp_ls')
     end
   }
 }

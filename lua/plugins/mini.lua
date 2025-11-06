@@ -8,9 +8,13 @@ return {
       local icons = require 'mini.icons'
       local cursorword = require 'mini.cursorword'
       local tabline = require 'mini.tabline'
-      -- local completion = require 'mini.completion'
       local hipatterns = require 'mini.hipatterns'
-      statusline.setup({ use_icons = true })
+      local git = require 'mini.git'
+      -- local completion = require 'mini.completion'
+      git.setup()
+      statusline.setup({ 
+        use_icons = true
+      })
       comment.setup()
       icons.setup()
       cursorword.setup()
