@@ -9,6 +9,9 @@ vim.cmd([[
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 
+set.autoread = true
+set.swapfile = false
+
 set.number = true
 set.autoindent = true
 set.expandtab = true
