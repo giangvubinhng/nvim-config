@@ -9,6 +9,19 @@ vim.cmd([[
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 
+g.backup = false
+g.writebackup = false
+g.swapfile = false
+
+g.autoread = true
+
+vim.api.nvim_create_autocmd(
+  { "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" },
+  {
+    command = "checktime",
+  }
+)
+
 set.autoread = true
 set.swapfile = false
 

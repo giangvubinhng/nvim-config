@@ -2,10 +2,10 @@ return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
   config = function()
-    local configs = require("nvim-treesitter.configs")
+    local configs = require("nvim-treesitter")
     configs.setup({
       -- ensure_installed = { "lua", "python", "rust", "sql", "typescript", "tsx", "yaml", "json", "javascript", "dockerfile", "css", "html"},
-      ensure_installed = { "lua", "python", "yaml", "json", "dockerfile", "typescript", "tsx", "javascript" },
+      ensure_installed = { "lua", "python", "yaml", "json", "dockerfile", "sql", "typescript", "tsx", "javascript" },
       sync_install = false,
       highlight = {
         enable = true,
